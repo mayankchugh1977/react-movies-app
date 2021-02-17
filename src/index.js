@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './screens/Home/Home';
-import Header from './common/Header/Header'
+import Header from './common/header/Header'
 import 'typeface-roboto';
 
 ReactDOM.render(
