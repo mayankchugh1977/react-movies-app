@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField  from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+import Confirmation from '../confirmation/Confirmation';
 
 class BookShow extends Component {
 
@@ -74,6 +75,7 @@ class BookShow extends Component {
     }
 
     
+    
     bookShowButtonHandler = () => {
         console.log("bookShowButtonHandler called")
         this.state.location === "" ? this.setState({reqLocation: "dispBlock"}) : this.setState({reqLocation: "dispNone"});
@@ -81,7 +83,7 @@ class BookShow extends Component {
         this.state.showDate === "" ? this.setState({reqShowDate: "dispBlock"}) : this.setState({reqShowDate: "dispNone"});
         this.state.showTime === "" ? this.setState({reqShowTime: "dispBlock"}) : this.setState({reqShowTime: "dispNone"});
         this.state.tickets === "" ? this.setState({reqTickets: "dispBlock"}) : this.setState({reqTickets: "dispNone"});
-        
+        ReactDOM.render(<Confirmation bookingSummary={this.state} />, document.getElementById('root'));
     }
 
     render() {
