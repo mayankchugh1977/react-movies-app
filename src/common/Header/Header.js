@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+// import ReactDom from 'react-dom';
 import './Header.css';
 import Button from '@material-ui/core/Button';
 import logo from '../../assets/logo.svg';
@@ -12,7 +12,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import BookShow from '../../screens/bookshow/BookShow'
+import BookShow from '../../screens/bookshow/BookShow';
+import { Link } from 'react-router-dom';
 
 const customStyles = {
     content: {
@@ -134,9 +135,9 @@ class Header extends Component {
         this.setState({contact: e.target.value});
     }
 
-    bookshowHandler = () => {
-        ReactDom.render(<BookShow />, document.getElementById('root'))
-    }
+    // bookshowHandler = () => {
+    //     ReactDom.render(<BookShow />, document.getElementById('root'))
+    // }
     render(){
         return (
             <div>
@@ -149,9 +150,16 @@ class Header extends Component {
                     </div>   
                     {this.props.showBookShowButton === "true" ?
                         <div className="bookshow-button">
-                            <Button variant="contained" color="primary" onClick={this.bookshowHandler}>
+                            
+                            {/* <Button variant="contained" color="primary" onClick={this.bookshowHandler}>
                                 BOOK SHOW
-                            </Button> 
+                            </Button>  */}
+
+                            <Link to={"/bookshow/" + this.props.id}>
+                                <Button variant="contained" color="primary">
+                                        Book Show
+                                </Button>
+                            </Link>
                         </div> : "" }     
                 </header>
                 <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" 

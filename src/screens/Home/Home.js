@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import './Home.css';
-import Details from '../details/Details';
+// import Details from '../details/Details';
 import Header from '../../common/header/Header';
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from '../../common/movieData';
@@ -88,8 +88,8 @@ class Home extends Component {
     }
 
     movieClickHandler = (movieId) => {
-        ReactDOM.render( <Details movieId={movieId}/>,document.getElementById('root'));
-    }
+        // ReactDOM.render( <Details movieId={movieId}/>,document.getElementById('root'));
+        this.props.history.push('/movie/'+movieId);    }
 
     render(){
         const { classes } = this.props;
