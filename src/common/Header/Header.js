@@ -58,9 +58,9 @@ class Header extends Component {
                 registerpasswordRequired: "dispNone",
                 registerpassword: "",                
                 contactRequired: "dispNone",
-                contact: "",
+                contact: ""//,
                 // registrationSuccess: false,
-                loggedIn: sessionStorage.getItem("access-token") == null ? false : true
+                // loggedIn: sessionStorage.getItem("access-token") == null ? false : true
                
             };
     }
@@ -83,7 +83,8 @@ class Header extends Component {
             registerpassword: "",
             contact: "",
             contactRequired: "dispNone",
-            registrationSuccess: false
+            registrationSuccess: false,
+            loggedIn: sessionStorage.getItem("access-token") == null ? false : true
         })
     }
 
@@ -99,6 +100,28 @@ class Header extends Component {
         console.log("loginClickHandler called")
         this.state.username === "" ? this.setState({usernameRequired: "dispBlock"}) : this.setState({usernameRequired: "dispNone"});
         this.state.password === "" ? this.setState({passwordRequired: "dispBlock"}) : this.setState({passwordRequired: "dispNone"});
+
+        let dataLogin = null;
+        let xhrLogin = new XMLHttpRequest();
+        let that = this;
+        xhrLogin.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                sessionStorage.setItem("uuid", JSON.parse(this.responseText).id);
+                sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token"));
+
+                that.setState({
+                    loggedIn: true
+                });
+
+                that.closeModalHandler();
+            }
+        });
+
+        xhrLogin.open("POST", this.props.baseUrl + "auth/login");
+        xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.username + ":" + this.state.password));
+        xhrLogin.setRequestHeader("Content-Type", "application/json");
+        xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+        xhrLogin.send(dataLogin);
     }
 
     inputUsernameChangeHandler = (e) => {
@@ -164,17 +187,35 @@ class Header extends Component {
         this.setState({contact: e.target.value});
     }
 
+    logoutHandler = (e) => {
+        sessionStorage.removeItem("uuid");
+        sessionStorage.removeItem("access-token");
+
+
+        this.setState({
+            loggedIn: false
+        });
+    }
+
 
     render(){
         return (
             <div>
                 <header className="app-header">
                     <img src={logo} className='app-logo' alt="logo" ></img>
+                    {!this.state.loggedIn ?
                     <div className="login-button">
                         <Button variant="contained" color="default" onClick={this.openModalHandler}> 
                             Login 
                         </Button>
-                    </div>   
+                    </div>
+                    :
+                    <div className="login-button">
+                        <Button variant="contained" color="default" onClick={this.logoutHandler}>
+                            Logout
+                        </Button>
+                    </div>
+                }   
                     {this.props.showBookShowButton === "true" ?
                         <div className="bookshow-button">
                             <Link to={"/bookshow/" + this.props.id}>
@@ -203,6 +244,14 @@ class Header extends Component {
                             <FormHelperText className={this.state.passwordRequired}> <span className="red"> required</span></FormHelperText>
                         </FormControl>
                         <br/><br/>
+                        {this.state.loggedIn === true &&
+                                <FormControl>
+                                    <span className="successText">
+                                        Login Successful!
+                                    </span>
+                                </FormControl>
+                            }
+                            <br /><br />
                         <Button variant="contained" color="primary" onClick={this.loginClickHandler}> Login </Button>
                     </TabContainer>}
 
