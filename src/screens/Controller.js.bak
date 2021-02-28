@@ -4,7 +4,7 @@ import Details from './details/Details';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import BookShow from './bookshow/BookShow';
 import Confirmation from './confirmation/Confirmation';
-// import moviesData from '../common/movieData';
+import moviesData from '../common/movieData';
 
 class Controller extends Component {
 
@@ -18,7 +18,7 @@ class Controller extends Component {
         return(
             <Router>
                 <div className="main-container">
-                              <Route exact path='/' render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
+                    <Route exact path='/'  render={ (props) => <Home {...props} moviesData={moviesData} baseurl = {this.baseUrl} />  } />
                     <Route path='/movie/:id'  render={ (props) => <Details {...props} baseurl = {this.baseUrl} />} />
                     <Route path='/bookshow/:id'  render={ (props) => <BookShow {...props} baseurl = {this.baseUrl} />} />
                     <Route path='/confirm/:id'  render={ (props) => <Confirmation {...props} baseurl = {this.baseUrl} />} />

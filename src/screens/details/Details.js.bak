@@ -18,11 +18,7 @@ class Details extends Component {
     constructor(){
         super();
         this.state = {
-            movie: {
-                genres: [],
-                trailer_url: "",
-                artists: []
-            },
+            movie:{},
             starIcons: [
                 {
                    id: 1,
@@ -123,8 +119,8 @@ class Details extends Component {
                         </div>
                         <br/>
                         <div>
-                            <Typography>
-                                <span className="bold">Genres: </span> {movie.genres.join(', ')}
+                            <Typography> 
+                                <span className="bold">Genres: </span> {movie.genres.join(',')} 
                             </Typography>
                         </div>
                         <div>
@@ -179,7 +175,7 @@ class Details extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
